@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyLeadFollowupRequest;
 use App\Http\Requests\StoreLeadFollowupRequest;
 use App\Http\Requests\UpdateLeadFollowupRequest;
+use App\Models\Lead;
 use App\Models\LeadFollowup;
 use App\Models\LeadStatus;
 use App\Models\User;
@@ -19,7 +20,7 @@ class LeadFollowupsController extends Controller
     {
         abort_if(Gate::denies('lead_followup_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $leadFollowups = LeadFollowup::with(['user', 'lead_status'])->get();
+        $leadFollowups = LeadFollowup::with(['user', 'lead_status', 'lead'])->get();
 
         return view('admin.leadFollowups.index', compact('leadFollowups'));
     }
@@ -32,7 +33,9 @@ class LeadFollowupsController extends Controller
 
         $lead_statuses = LeadStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.leadFollowups.create', compact('users', 'lead_statuses'));
+        $leads = Lead::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.leadFollowups.create', compact('users', 'lead_statuses', 'leads'));
     }
 
     public function store(StoreLeadFollowupRequest $request)
@@ -50,9 +53,11 @@ class LeadFollowupsController extends Controller
 
         $lead_statuses = LeadStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $leadFollowup->load('user', 'lead_status');
+        $leads = Lead::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.leadFollowups.edit', compact('users', 'lead_statuses', 'leadFollowup'));
+        $leadFollowup->load('user', 'lead_status', 'lead');
+
+        return view('admin.leadFollowups.edit', compact('users', 'lead_statuses', 'leads', 'leadFollowup'));
     }
 
     public function update(UpdateLeadFollowupRequest $request, LeadFollowup $leadFollowup)
@@ -66,7 +71,7 @@ class LeadFollowupsController extends Controller
     {
         abort_if(Gate::denies('lead_followup_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $leadFollowup->load('user', 'lead_status');
+        $leadFollowup->load('user', 'lead_status', 'lead');
 
         return view('admin.leadFollowups.show', compact('leadFollowup'));
     }

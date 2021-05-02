@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use \DateTimeInterface;
+use App\Traits\Auditable;
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,6 +14,7 @@ class Lead extends Model
 {
     use SoftDeletes;
     use MultiTenantModelTrait;
+    use Auditable;
     use HasFactory;
 
     public $table = 'leads';

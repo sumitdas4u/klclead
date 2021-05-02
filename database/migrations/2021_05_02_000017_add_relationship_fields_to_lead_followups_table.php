@@ -13,6 +13,8 @@ class AddRelationshipFieldsToLeadFollowupsTable extends Migration
             $table->foreign('user_id', 'user_fk_3799220')->references('id')->on('users');
             $table->unsignedBigInteger('lead_status_id')->nullable();
             $table->foreign('lead_status_id', 'lead_status_fk_3799221')->references('id')->on('lead_statuses');
+            $table->unsignedBigInteger('lead_id');
+            $table->foreign('lead_id', 'lead_fk_3814435')->references('id')->on('leads');
         });
     }
 }

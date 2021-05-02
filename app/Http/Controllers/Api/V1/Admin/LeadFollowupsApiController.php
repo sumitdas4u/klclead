@@ -17,7 +17,7 @@ class LeadFollowupsApiController extends Controller
     {
         abort_if(Gate::denies('lead_followup_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new LeadFollowupResource(LeadFollowup::with(['user', 'lead_status'])->get());
+        return new LeadFollowupResource(LeadFollowup::with(['user', 'lead_status', 'lead'])->get());
     }
 
     public function store(StoreLeadFollowupRequest $request)
@@ -33,7 +33,7 @@ class LeadFollowupsApiController extends Controller
     {
         abort_if(Gate::denies('lead_followup_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new LeadFollowupResource($leadFollowup->load(['user', 'lead_status']));
+        return new LeadFollowupResource($leadFollowup->load(['user', 'lead_status', 'lead']));
     }
 
     public function update(UpdateLeadFollowupRequest $request, LeadFollowup $leadFollowup)

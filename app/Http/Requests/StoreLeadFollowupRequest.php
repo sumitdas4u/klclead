@@ -16,6 +16,11 @@ class StoreLeadFollowupRequest extends FormRequest
 
     public function rules()
     {
-        return [];
+        return [
+            'lead_id' => [
+                'required',
+                'integer',
+            ],
+        ];
     }
 }

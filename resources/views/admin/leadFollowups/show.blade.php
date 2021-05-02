@@ -47,6 +47,14 @@
                             {{ $leadFollowup->comments }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.leadFollowup.fields.lead') }}
+                        </th>
+                        <td>
+                            {{ $leadFollowup->lead->name ?? '' }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
