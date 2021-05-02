@@ -35,6 +35,12 @@
                             {{ trans('cruds.leadFollowup.fields.comments') }}
                         </th>
                         <th>
+                            {{ trans('cruds.leadFollowup.fields.lead') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.lead.fields.name') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -56,6 +62,12 @@
                             </td>
                             <td>
                                 {{ $leadFollowup->comments ?? '' }}
+                            </td>
+                            <td>
+                                {{ $leadFollowup->lead->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $leadFollowup->lead->name ?? '' }}
                             </td>
                             <td>
                                 @can('lead_followup_show')

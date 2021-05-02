@@ -24,6 +24,7 @@ class LeadFollowup extends Model
         'user_id',
         'lead_status_id',
         'comments',
+        'lead_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -37,6 +38,11 @@ class LeadFollowup extends Model
     public function lead_status()
     {
         return $this->belongsTo(LeadStatus::class, 'lead_status_id');
+    }
+
+    public function lead()
+    {
+        return $this->belongsTo(Lead::class, 'lead_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)
